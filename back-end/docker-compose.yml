@@ -8,3 +8,31 @@ services:
       - "8080:8080"
     volumes: 
       - .:/usr/src/app
+
+  db:
+    build: ./Dockerfiles/Docker-PG/
+    ports: 
+      - "5432:5432"
+    volumes: 
+      - ./Dockerfiles/Docker-PG/db:/usr/src/db
+    environment: 
+      POSTGRES_DATABASE: postgres
+      POSTGRES_PASSWORD: "12345678"
+    networks:
+      - postgres-network
+  
+  pgadmin4:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "thomas@dev.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "12345678"
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    networks:
+      - postgres-network
+
+networks: 
+  postgres-network:
+    driver: bridge
