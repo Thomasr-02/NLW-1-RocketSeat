@@ -7,39 +7,16 @@ module.exports = {
     client: 'pg',
     connection: {
       host: '0.0.0.0',
+      port: '5432',
       user: 'postgres',
       password: '12345678',
       database: 'postgres'
     }
   },
 
-  staging: {
-    client: 'pg',
-    connection: {
-      host: '0.0.0.0',
-      user: 'postgres',
-      password: '12345678',
-      database: 'postgres'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: path.resolve(__dirname, 'src', 'database', 'migrations')
-    }
-  },
-  production: {
-    client: 'pg',
-    connection: {
-      host: '0.0.0.0',
-      user: 'postgres',
-      password: '12345678',
-      database: 'postgres'
-    },
-    migrations: {
-      directory:  path.resolve(__dirname, 'src', 'database', 'seeds'),
-    },
-    seeds: { directory:  path.resolve(__dirname, 'src', 'database', 'seeds') },
+  
+  migrations: {
+    tableName: path.resolve(__dirname, 'src', 'database', 'migrations')
   }
+
 }
