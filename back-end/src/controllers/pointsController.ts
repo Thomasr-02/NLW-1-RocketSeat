@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-const knex = require("./database/db.ts"); // importing the db config
+const knex = require("../database/db.ts"); // importing the db config
 
-class PointsController {
+class pointsController {
   async index(request: Request, response: Response) {
     const { city, uf, items } = request.query;
     const parsedItems = String(items)
@@ -46,8 +46,43 @@ class PointsController {
 
   }
 
+  async createPoints(req: Request, res: Response){
+    const {
+      name,
+      email,
+      whatsapp,
+      longitude,
+      latitude,
+      city,
+      uf,
+      items
+    } = req.body;
+    const point= {
+      image: 'image-fake',
+      name,
+      email,
+      whatsapp,
+      city,
+      uf,
+      longitude,
+      latitude,
+    }
+    const trx= await knex.transaction();
   
-  
+    const insertID = await  trx('points').insert(point).returning('*');
+    const pointItems = items.map((item_id:any)=>{
+      return {
+        item_id,
+        point_id: insertID[0].id,
+      }
+    })
+    await trx('point_items').insert(pointItems)
+    return res.json({
+      id: insertID[0].id,
+      ...point
+    });
+  }
 }
-
+ 
+const PointsController = new pointsController();
 export default PointsController;
