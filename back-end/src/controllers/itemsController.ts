@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 const knex = require("../database/db.ts"); // importing the db config
 
 class itemsController{
-  async showItems(req: Request,res: Response)
+  async index(req: Request,res: Response)
   {
     try {
       const items = await knex('items').select('*');

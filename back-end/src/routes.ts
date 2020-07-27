@@ -1,11 +1,13 @@
-import express, { json } from "express";
-const knex = require("./database/db.ts"); // importing the db config
+import express from "express";
 import itemsController from './controllers/itemsController'
 import PointsController from "./controllers/pointsController";
 const routes = express.Router();
 
-routes.get("/items", itemsController.showItems);
+routes.get("/items", itemsController.index);
 
-routes.post("/points", PointsController.createPoints);
+routes.post("/points", PointsController.create);
+routes.get("/points/:id", PointsController.show);
+routes.get("/points", PointsController.index);
+
 
 export default routes;

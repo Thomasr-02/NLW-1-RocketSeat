@@ -46,7 +46,7 @@ class pointsController {
 
   }
 
-  async createPoints(req: Request, res: Response){
+  async create(req: Request, res: Response){
     const {
       name,
       email,
@@ -58,7 +58,7 @@ class pointsController {
       items
     } = req.body;
     const point= {
-      image: 'image-fake',
+      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
       name,
       email,
       whatsapp,
@@ -77,6 +77,7 @@ class pointsController {
       }
     })
     await trx('point_items').insert(pointItems)
+    await trx.commit();
     return res.json({
       id: insertID[0].id,
       ...point
