@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
+import Router from './router';
 
-function App() {
+const App = () => {
   return (
-        <h1>TESTE</h1>
+    <div>
+      <Router></Router>
+    </div>
   );
 }
 
